@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+  <meta charset="utf-8">
+  <title>Visualisations of the Talk of Europe dataset</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="dist/css/normalize.css">
+  <link rel="stylesheet" href="dist/css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://linkedpolitics.ops.few.vu.nl/pengine/pengines.js"
+          type="text/javascript">
+  </script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"
+          type="text/javascript">
+  </script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  
+ 
+  <link rel="icon" type="image/png" href="dist/images/favicon.png">
+  <script>
+
+
+// A $( document ).ready() block.
+$( document ).ready(function() {
+
+
+$(function () {
+ var pie_chart=   $('#member-topic-cloud-containter').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Topics discussed by selected member'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: []
+        }]
+    });
+    
+    
+    
+    
+    var party_chart=   $('#party-topic-cloud-containter').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Topics discussed by selected party'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: []
+        }]
+    });
+    var party_chart2=   $('#party-topic-cloud-containter2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Topics discussed by selected party'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: []
+        }]
+    });
+    
+});
+
+
+
+
+
+        var country_sel = $('<select class="country-selection" >').appendTo('#country-select');
+        var party_sel = $('<select class="party-selection" style="width:750px;">').appendTo('#party-select');
+        var country_sel2 = $('<select class="country-selection2">').appendTo('#country-select2');
+        var party_sel2 = $('<select class="party-selection2" style="width:750px;">').appendTo('#party-select2');
+        var country_sel3 = $('<select class="country-selection3" >').appendTo('#country-select3');
+        var member_sel = $('<select class="member-selection">').appendTo('#member-select');
+        
+	new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_countries(Country,CountryLabel)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  //var sel = $('<select class="country-selection">').appendTo('#country-select');
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    country_sel.append($("<option>").attr('value',b.Country).text(b.CountryLabel));
+		  
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+
+	 });
+	 new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_countries(Country,CountryLabel)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  //var sel = $('<select class="country-selection">').appendTo('#country-select');
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    country_sel2.append($("<option>").attr('value',b.Country).text(b.CountryLabel));
+		  
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+
+	 });
+	 
+	 
+	  new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_countries(Country,CountryLabel)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  //var sel = $('<select class="country-selection">').appendTo('#country-select');
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    country_sel3.append($("<option>").attr('value',b.Country).text(b.CountryLabel));
+		  
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+
+	 }); 
+	 
+	 
+	 
+	 
+	  $(".party-selection").change(function(){
+	 	 new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "party_topic_count('"+ $(".party-selection" ).val()+"',TopicLabel,Count)",
+		//ask: "party_topic_label_count(Party, TopicLabel, Count)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		
+		 
+		
+		var pie_chart = $('#party-topic-cloud-containter').highcharts();
+		var newTitle = 'Topics discussed in parliament by '+ $(".party-selection option:selected").text();
+		pie_chart.setTitle({text:newTitle}); 
+		var seriesData = [];
+		  for(var i=0; i<result.data.length; i++) {
+		   seriesData.push([result.data[i].TopicLabel,result.data[i].Count]);
+		    
+		   
+		    
+		  }
+		  pie_chart.series[0].setData(seriesData, true);
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	 });
+	 
+	  $(".party-selection2").change(function(){
+	 	 new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "party_topic_count('"+ $(".party-selection2" ).val()+"',TopicLabel,Count)",
+		//ask: "party_topic_label_count(Party, TopicLabel, Count)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		
+		 
+		
+		var pie_chart = $('#party-topic-cloud-containter2').highcharts();
+		var newTitle = 'Topics discussed in parliament by '+ $(".party-selection2 option:selected").text();
+		pie_chart.setTitle({text:newTitle}); 
+		var seriesData = [];
+		  for(var i=0; i<result.data.length; i++) {
+		   seriesData.push([result.data[i].TopicLabel,result.data[i].Count]);
+		    
+		   
+		    
+		  }
+		  pie_chart.series[0].setData(seriesData, true);
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	 });
+	 
+	 $(".member-selection").change(function(){
+	 	 new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "unique_speaker_topics('"+ $(".member-selection" ).val()+"',TopicLabel,Count)",
+		//ask: "party_topic_label_count(Party, TopicLabel, Count)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		
+		 
+		
+		var pie_chart = $('#member-topic-cloud-containter').highcharts();
+		var newTitle = 'Topics discussed in parliament by '+ $(".member-selection option:selected").text();
+		pie_chart.setTitle({text:newTitle}); 
+		var seriesData = [];
+		  for(var i=0; i<result.data.length; i++) {
+		   seriesData.push([result.data[i].TopicLabel,result.data[i].Count]);
+		    
+		   
+		    
+		  }
+		  pie_chart.series[0].setData(seriesData, true);
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	 });
+	 $( ".country-selection" ).change(function() {
+       
+	    new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_national_parties_set('"+ $(".country-selection" ).val()+"', PartySet)",
+		//ask: "party_topic_label_count(Party, TopicLabel, Count)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    party_sel.empty();
+		    for (var j =0; j<b.PartySet.length;j++){
+		        party_sel.append($("<option>").attr('value',b.PartySet[j].args[0]).text(b.PartySet[j].args[1]));
+		    
+		    }
+		    
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	    
+	});
+	 $( ".country-selection2" ).change(function() {
+       
+	    new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_national_parties_set('"+ $(".country-selection2" ).val()+"', PartySet)",
+		//ask: "party_topic_label_count(Party, TopicLabel, Count)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    party_sel2.empty();
+		    for (var j =0; j<b.PartySet.length;j++){
+		        party_sel2.append($("<option>").attr('value',b.PartySet[j].args[0]).text(b.PartySet[j].args[1]));
+		    
+		    }
+		    
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	   
+	});
+	$( ".country-selection3" ).change(function() {
+       
+	   
+	    new Pengine({ server: "http://linkedpolitics.ops.few.vu.nl/pengine",
+		ask: "get_national_member_set('"+ $(".country-selection" ).val()+"', MemberSet)",
+		chunk: 1000,
+		application: "swish",
+		onsuccess: function(result) {
+		  for(var i=0; i<result.data.length; i++) {
+		    var b = result.data[i];
+		    member_sel.empty();
+		    for (var j =0; j<b.MemberSet.length;j++){
+		        member_sel.append($("<option>").attr('value',b.MemberSet[j].args[0]).text(b.MemberSet[j].args[1]));
+		    
+		    }
+		    
+		  }
+		  if ( result.more )
+                    result.pengine.next();
+	        }
+	    });
+	});
+});
+
+
+
+</script>
+
+
+</head>
+<body>
+
+
+  <div class="section hero">
+    <div class="container">
+      <div class="row">
+        <div class="one-half column">
+          <h4 class="hero-heading">Visualizing Linked Data about the European Parliament.</h4>
+          <a class="button button-primary" href="http://www.talkofeurope.eu/">More about Talk Of Europe >></a>
+        </div>
+        <div class="one-half column phones">
+          <img class="phone" src="images/phone.png">
+          <img class="phone" src="images/phone.png">
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="section categories">
+    <div class="container">
+      <h1 class="section-heading">Compare topics discussed by two national parties</h1>
+      <p class="section-description">Get insight into which topics a party was mostly talking about. Note that all information, even the selection boxes are generated automatically by
+      communicating via <a href="http://pengines.swi-prolog.org/docs/index.html"> Pengine </a> to a <a href="http://swish.swi-prolog.org/"> SWISH prolog backend</a></p>
+      
+      <div class="row">
+        <div class="one-half column category" style=position: relative;  left: -150px; >
+		
+		
+		Country: <div id="country-select" style="color:black;width:100%; height:50px;"></div>
+		<div style="text-align: left;margin-left: -300px;"> Party: </div>
+		
+		<div id="party-select" style="font-size: 12px;color:black;width:100%; height:50px;margin-left: -300px;"></div>
+		
+		<div id="party-topic-cloud-containter" style="min-width: 750px; height: 600px; margin-left: -300px; max-width: 750px;"></div>
+		
+		
+		
+		
+	</div>
+        <div class="one-half column category">
+        	
+		
+		Country<div id="country-select2" style="color:black;width:100%; height:50px;"></div>
+		<div style="text-align: left;"> Party: </div>
+		
+		<div id="party-select2" style="font-size: 12px;color:black;width:100%; height:50px;"></div>
+		
+		<div id="party-topic-cloud-containter2" style="min-width: 750px; height: 600px; max-width: 750px; margin: 0 auto"></div>
+		
+		
+		
+		
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section values">
+    <div class="container">
+    <h2> Members of EU Parliament </h2>
+    <h3> Country</h3>
+		
+		<div id="country-select3" style="color:black;width:100%; height:50px;"></div>
+    <div id="member-select" style="color:black;width:100%; height:50px;"></div>
+		
+		<div id="member-topic-cloud-containter" style="min-width: 1000px; height: 600px; max-width: 1200px; margin: 0 auto"></div>
+			  <img class="u-max-full-width" src="images/placeholder.png">
+		</div>
+     
+  </div>
+
+  <div class="section get-help">
+    <div class="container">
+      <h3 class="section-heading">Need help?</h3>
+      <p class="section-description">SWISH in combination with Pengines is an amazingly powerful toolkit¤ to visualise linked data in various popular graph visualisation environments. If you want to learn more, just visit the documentation or send me an email!</p>
+      <a class="button button-primary" href="mailto:rss220@vu.nl">Ronald Siebes - VU Amsterdam</a>
+    </div>
+  </div>
+<script>
+
+  function setCountries(Countries){
+  
+  
+  }
+</script>
+<div id="eu_membership" style="width:800px; height: 300px;"></div>
+
+<div id="example3.1" style="width:1400px; height: 3200px;"></div>
+
+<h2>Topic relevance per party</h2>
+
+<p>
+The table below is filled by running a query against the main SWISH
+server at <a
+href="http://swish.swi-prolog.org">http://swish.swi-prolog.org</a>,
+using the saved script <a
+href="http://swish.swi-prolog.org/p/sin_table.pl">sin_table.pl</a>.  Note that this
+example illustrates that you can write interactive web applications
+against one or more Pengine enabled Prolog servers without having
+direct access to Prolog.
+
+<table id="sin">
+<tr><th>X<th>Y</tr>
+</table>
+
+<script type="text/x-prolog">
+% Include a script saved on the server, combine it with your code here.
+:- include(visual2).
+</script>
+
+<script type="text/javascript">
+
+
+$(function() {
+  
+});
+
+ 
+</script>
+  
+</body>
+</html>
